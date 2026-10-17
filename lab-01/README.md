@@ -1,22 +1,22 @@
-<<<<<<< HEAD
-# BDF Lab 1: Node.js and Express Server
+# Lab 1: Node.js and Express Server
 
 ## Student Details
 
 - **Name:** Sumanth
-- **Registration Number:** Enter your registration number
+- **Registration Number:** 252U1R9117
 - **Section:** 111 CSE GEN-AI 2B
+- **Course:** Backend Development Fundamentals
 - **Lab Number:** 01
 
-## Live Deployment
+## Live Link
 
 **Platform:** Render
 
-**Live URL:** To be added after deployment.
+**Live URL:** https://bdf-lab-01-sumanth.onrender.com
 
 ## Objective
 
-To create a basic HTTP server using Node.js and develop an Express server with multiple routes, JSON responses, date and time output, and error handling for unknown routes.
+To set up a Node.js project and build a web server first using the built-in HTTP module and then using Express.js.
 
 ## Technologies Used
 
@@ -26,33 +26,45 @@ To create a basic HTTP server using Node.js and develop an Express server with m
 - npm
 - Visual Studio Code
 - Google Chrome
+- Git and GitHub
+- Render
 
 ## Project Structure
 
 ```text
-lab-01/
-├── screenshots/
-│   ├── home.png
-│   ├── about.png
-│   ├── time.png
-│   └── not-found.png
+BDF-Course-Labs/
 ├── .gitignore
-├── package.json
-├── package-lock.json
-├── README.md
-├── server-http.js
-└── server.js
+└── lab-01/
+    ├── screenshots/
+    │   ├── home.png
+    │   ├── home-status.png
+    │   ├── about.png
+    │   ├── about-status.png
+    │   ├── time.png
+    │   ├── time-status.png
+    │   ├── not-found.png
+    │   └── not-found-status.png
+    ├── .gitignore
+    ├── README.md
+    ├── package.json
+    ├── package-lock.json
+    ├── server-http.js
+    └── server.js
 ```
+
+**Note:** `node_modules/` is installed locally and excluded from GitHub using `.gitignore`.
 
 ## Installation and Setup
 
 ### Prerequisites
 
-Install Node.js and npm.
+Install Node.js and npm on your system.
 
 ### Install Dependencies
 
-Open the terminal in the project folder and run:
+1. Open the `lab-01` folder in Visual Studio Code.
+2. Open the terminal.
+3. Run the following command:
 
 ```bash
 npm install
@@ -60,28 +72,56 @@ npm install
 
 ### Run the Express Server
 
+Start the Express server using:
+
 ```bash
-node server.js
+npm start
 ```
 
-Open `http://localhost:3000` in your browser.
+Open the following URL in your browser:
+
+http://localhost:3000
 
 ### Run the Original Node.js HTTP Server
+
+To run the server created using the built-in Node.js HTTP module, use:
 
 ```bash
 node server-http.js
 ```
 
-Stop the currently running server before starting another server on the same port.
+Stop the running server before starting another server on the same port.
+
+## package.json Fields
+
+- **name:** The name of the project.
+- **version:** The current project version.
+- **description:** A short description of the project, if provided.
+- **main:** The main entry file specified in the project.
+- **scripts:** Commands used to run project tasks, such as `npm start`.
+- **keywords:** Words describing the project, if provided.
+- **author:** The project author's name, if provided.
+- **license:** The project's license.
+- **type:** Specifies the JavaScript module system. `commonjs` allows the use of `require()`.
+- **dependencies:** Packages required by the application, including Express.
+
+The fields shown depend on the actual `package.json` file.
 
 ## API Endpoints
 
-| HTTP Method | Endpoint | Description | Status Code |
+| HTTP Method | Endpoint | Description | Expected Status Code |
 |---|---|---|---|
-| GET | `/` | Displays a welcome message | 200 OK |
-| GET | `/about` | Returns student details in JSON format | 200 OK |
+| GET | `/` | Displays the welcome message | 200 OK |
+| GET | `/about` | Returns the name and section in JSON format | 200 OK |
 | GET | `/time` | Displays the current date and time | 200 OK |
-| GET | `/anything` | Returns a page-not-found message | 404 Not Found |
+| GET | `/anything` | Displays a page-not-found message for an unknown route | 404 Not Found |
+
+### Test the Live Endpoints
+
+- Home: https://bdf-lab-01-sumanth.onrender.com/
+- About: https://bdf-lab-01-sumanth.onrender.com/about
+- Time: https://bdf-lab-01-sumanth.onrender.com/time
+- 404 Test: https://bdf-lab-01-sumanth.onrender.com/anything
 
 ## Screenshots
 
@@ -125,37 +165,35 @@ Stop the currently running server before starting another server on the same por
 
 ![404 status code](screenshots/not-found-status.png)
 
-
 ## HTTP Status Codes
 
-- **200 OK:** The request was successful.
-- **404 Not Found:** The requested route does not exist.
+- **200 OK:** The request was successful, and the server returned the requested response.
+- **404 Not Found:** The requested route does not exist on the server.
+
+## Viva Questions and Answers
+
+### 1. What is the difference between `package.json` and `node_modules`?
+
+`package.json` stores project information, scripts, and dependency details. `node_modules` contains the installed packages used by the application.
+
+### 2. What does `app.listen()` do?
+
+`app.listen()` starts the Express server and makes it listen for incoming requests on the specified port.
+
+### 3. What do request and response represent?
+
+The request contains information sent by the client to the server. The response contains the information the server sends back to the client.
+
+## Notes: Problems Faced and Solutions
+
+- **Git push rejection:** The local and remote repositories had separate histories. The remote changes were pulled, the README conflict was resolved, and the changes were pushed to GitHub.
+- **Deployment configuration:** The Express server was configured to use `process.env.PORT || 3000` so it works locally and on Render. An `npm start` script was added to `package.json`.
+- **Screenshot documentation:** Separate screenshots were captured for server responses and HTTP status-code verification and referenced in this README.
 
 ## Result
 
-Successfully created and tested a basic Node.js HTTP server and an Express server with multiple routes, JSON responses, date and time output, and 404 error handling.
-
-## Viva Questions
-
-**1. What is the difference between `package.json` and `node_modules`?**
-
-`package.json` stores project details, scripts, and dependency information. `node_modules` contains installed packages.
-
-**2. What does `app.listen()` do?**
-
-It starts the Express server and listens for incoming requests on the specified port.
-
-**3. What are request and response?**
-
-The request contains information sent by the client. The response contains the information sent back by the server.
-
-## Problems Faced
-
-Record the actual issues faced during development and how they were resolved.
+Successfully created and tested a Node.js HTTP server and an Express server with multiple routes, JSON responses, date and time output, and 404 handling. The Express application was deployed on Render.
 
 ## Git Repository
 
-Add the GitHub repository URL after uploading the lab files.
-=======
-# Lab 1: Node.js and Express server
->>>>>>> 398a9f89cd2f9e8ba6e774f4f932436b164c0375
+[View BDF-Course-Labs on GitHub](https://github.com/pandiri-sumanth/BDF-Course-Labs)
