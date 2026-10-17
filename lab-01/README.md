@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # BDF Lab 1: Node.js and Express Server
 
 ## Student Details
@@ -155,3 +156,6 @@ Record the actual issues faced during development and how they were resolved.
 ## Git Repository
 
 Add the GitHub repository URL after uploading the lab files.
+=======
+# Lab 1: Node.js and Express server
+>>>>>>> 398a9f89cd2f9e8ba6e774f4f932436b164c0375
