@@ -16,7 +16,20 @@ To create a SQLite database and develop REST API endpoints using Node.js and Exp
 - **Backend:** Node.js and Express.js
 - **SQLite Integration:** sqlite and sqlite3
 - **Development Tool:** Nodemon
-- **Port:** 3000
+- **API Testing Tool:** Postman
+- **Deployment Platform:** Render
+- **Local Port:** 3000
+
+---
+
+### Live Deployment
+
+- **Platform:** Render
+- **Service Name:** bdf-lab-02-sumanth
+- **Live Application:** https://bdf-lab-02-sumanth.onrender.com
+- **GET All Books API:** https://bdf-lab-02-sumanth.onrender.com/books/
+
+The application is successfully deployed on Render. The live GET All Books endpoint returns the 10 book records stored in the SQLite database.
 
 ---
 
@@ -27,18 +40,30 @@ To create a SQLite database and develop REST API endpoints using Node.js and Exp
 - Node.js
 - npm (Node Package Manager)
 - SQLite CLI (`sqlite3`)
-- VS Code
+- Visual Studio Code
+- Postman
 
-#### 2. Install Dependencies
-
-Open the terminal and navigate to the `lab-02` directory.
+#### 2. Clone the Repository
 
 ```bash
-cd lab-02
+git clone https://github.com/pandiri-sumanth/BDF-Course-Labs.git
+```
+
+Navigate to the Lab 2 directory:
+
+```bash
+cd BDF-Course-Labs/lab-02
+```
+
+#### 3. Install Dependencies
+
+Install the required packages:
+
+```bash
 npm install
 ```
 
-#### 3. Database Setup
+#### 4. Database Setup
 
 The project uses a SQLite database named `goodreads.db`.
 
@@ -54,7 +79,31 @@ The database contains a table named `book` with the following columns:
 
 Ten initial book records were inserted into the database using SQLite CLI.
 
-#### 4. Start the Server
+To inspect the database:
+
+```bash
+sqlite3 goodreads.db
+```
+
+Display the available tables:
+
+```sql
+.tables
+```
+
+Display all book records:
+
+```sql
+SELECT * FROM book;
+```
+
+Exit SQLite:
+
+```sql
+.exit
+```
+
+#### 5. Start the Server
 
 To start the development server using Nodemon:
 
@@ -62,13 +111,13 @@ To start the development server using Nodemon:
 npm run dev
 ```
 
-Alternatively, start the server using Node.js:
+Alternatively, start the application using Node.js:
 
 ```bash
 npm start
 ```
 
-The server runs at:
+The local server runs at:
 
 ```text
 http://localhost:3000/
@@ -78,12 +127,16 @@ Expected terminal output:
 
 ```text
 Database Connected Successfully
-Server Running at http://localhost:3000/
+Server Running at port 3000
 ```
+
+The application uses `process.env.PORT || 3000` to support both local execution and Render deployment.
 
 ---
 
 ### API Endpoints
+
+The application implements five REST API endpoints to perform CRUD operations.
 
 | Method | Endpoint | Status Code | Description |
 |---|---|---|---|
@@ -93,11 +146,37 @@ Server Running at http://localhost:3000/
 | PUT | `/books/:bookId/` | 200 OK / 404 Not Found | Updates an existing book. |
 | DELETE | `/books/:bookId/` | 200 OK / 404 Not Found | Deletes a book using its ID. |
 
----
+#### 1. GET All Books
 
-### Sample Request Bodies
+Endpoint:
 
-#### 1. POST - Add a Book
+```text
+GET /books/
+```
+
+Retrieves all book records from the database.
+
+#### 2. GET Book by ID
+
+Endpoint:
+
+```text
+GET /books/1/
+```
+
+Retrieves a specific book using its ID.
+
+If the book does not exist, the server returns `404 Not Found`.
+
+#### 3. POST - Add a New Book
+
+Endpoint:
+
+```text
+POST /books/
+```
+
+Sample request body:
 
 ```json
 {
@@ -108,7 +187,9 @@ Server Running at http://localhost:3000/
 }
 ```
 
-#### 2. PUT - Update a Book
+A successful request returns `201 Created` along with the generated book ID.
+
+#### 4. PUT - Update an Existing Book
 
 Example endpoint:
 
@@ -116,7 +197,7 @@ Example endpoint:
 PUT /books/11/
 ```
 
-Request body:
+Sample request body:
 
 ```json
 {
@@ -127,11 +208,27 @@ Request body:
 }
 ```
 
+Updates the details of the selected book.
+
+#### 5. DELETE - Remove a Book
+
+Example endpoint:
+
+```text
+DELETE /books/11/
+```
+
+Deletes the selected book from the database.
+
+Returns `404 Not Found` if the requested book ID does not exist.
+
 ---
 
 ### Screenshots
 
-Add your actual Postman and SQLite screenshots inside the `screenshots` folder.
+The following screenshots demonstrate API testing and database verification.
+
+Save the actual screenshots inside the `screenshots` folder using the filenames shown below.
 
 #### 1. GET All Books
 
@@ -161,17 +258,27 @@ Add your actual Postman and SQLite screenshots inside the `screenshots` folder.
 
 ![SQLite Verification](screenshots/07_sqlite_cli_verification.png)
 
+#### 8. Render Deployment Verification
+
+![Render Deployment](screenshots/08_render_deployment.png)
+
+#### 9. Live API Response
+
+![Live API Response](screenshots/09_live_api_response.png)
+
 ---
 
 ### Important Concepts Learned
 
 1. **SQLite:** A lightweight database used to store and manage structured data.
-2. **Database Connection:** Connecting the Node.js application to SQLite using the `open()` function.
+2. **Database Connection:** Connecting a Node.js application to SQLite using the `open()` function.
 3. **CRUD Operations:** Creating, reading, updating, and deleting database records.
 4. **Parameterized Queries:** Using `?` placeholders to safely pass user inputs into SQL queries.
 5. **Express Routes:** Creating API endpoints to handle HTTP requests.
 6. **Async/Await:** Managing asynchronous database operations.
 7. **Nodemon:** Automatically restarting the server when monitored files change.
+8. **REST API:** Using HTTP methods such as GET, POST, PUT, and DELETE to manage resources.
+9. **Deployment:** Hosting a Node.js application online using Render.
 
 ---
 
@@ -197,6 +304,16 @@ Add your actual Postman and SQLite screenshots inside the `screenshots` folder.
 - **Problem:** Directly inserting user input into SQL queries creates SQL injection risks.
 - **Solution:** Used parameterized queries with `?` placeholders and passed user values separately.
 
+#### 5. SQLite Compatibility During Deployment
+
+- **Problem:** The initial Render deployment failed because the installed SQLite native binary required a newer GLIBC version than the deployment environment provided.
+- **Solution:** Changed the SQLite package dependency to `sqlite3@5.1.7`, updated the package files, and redeployed the application successfully.
+
+#### 6. Render Port Configuration
+
+- **Problem:** The application initially used a fixed port, which is unsuitable for Render's assigned port configuration.
+- **Solution:** Used `process.env.PORT || 3000` to support both local execution and cloud deployment.
+
 ---
 
 ### Viva Questions and Answers
@@ -218,8 +335,33 @@ Parameterized queries use `?` placeholders to separate SQL commands from user-pr
 
 POST usually creates another record when repeated. PUT with the same data and resource ID produces the same final resource state.
 
+#### 4. What is SQLite?
+
+SQLite is a lightweight relational database management system. It stores data in a local database file and does not require a separate database server.
+
+#### 5. What is a primary key?
+
+A primary key uniquely identifies each record in a database table. In this project, `id` is the primary key of the `book` table.
+
+#### 6. What is the difference between db.all() and db.get()?
+
+- `db.all()` retrieves all matching records.
+- `db.get()` retrieves a single matching record.
+
+#### 7. Why do we use Nodemon?
+
+Nodemon automatically restarts the Node.js server when monitored files change. It helps during development.
+
+#### 8. Why do we use parameterized queries?
+
+Parameterized queries separate SQL commands from user-provided values. They help prevent SQL injection and make database queries safer.
+
 ---
 
 ### Conclusion
 
-In this lab, I created a SQLite database and connected it to an Express.js application. I implemented all five CRUD API endpoints to manage book records. I also tested the APIs using Postman and verified database changes using SQLite CLI.
+In this lab, I created a SQLite database and connected it to an Express.js application using Node.js. I implemented all five CRUD API endpoints to manage book records.
+
+I tested the endpoints using Postman and verified database changes using SQLite CLI. I also deployed the application successfully on Render and tested the live GET All Books API.
+
+This lab helped me understand SQLite integration, REST API development, parameterized SQL queries, asynchronous database operations, and application deployment.
